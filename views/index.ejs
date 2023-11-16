@@ -1,0 +1,71 @@
+<!-- A blogg       -->
+
+
+<%- include("partitionen/header.ejs") %>
+
+  <%- include("partitionen/Information.ejs") %>
+    <section id="databaseRecipes" class="d-flex justify-content-center align-items-center">
+      <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5 my-5">
+        <h1 class="text-body-emphasis">Tips for Everybody to handle everything</h1>
+        <p class="col-lg-6 mx-auto mb-4">
+          In our vast culinary haven, you'll uncover a myriad of food tips and inspiration waiting to be
+          infused into your recipes. Elevate your culinary creations, explore new flavors, and enhance your cooking
+          prowess.
+          Let our tips be your guide as you embark
+          on a journey to enrich your gastronomic skills and infuse diversity into your culinary repertoire.
+        </p>
+
+        <form class="form-floating d-flex flex-column align-items-center" action="/add" method="POST">
+          <div class="mb-3 my-5" style="width: 60%">
+            <label for="todoName" class="form-label">Name</label>
+            <input type="text" class="form-control" name="todoName" placeholder="" required>
+            <label for="floatingTextarea2" class="form-label">Write your Tip here</label>
+            <textarea class="form-control" placeholder="" id="floatingTextarea2" name="todoText" style="height: 100px"
+              required></textarea>
+            <input class="btn btn-primary mb-3 my-3" type="submit" value="Let's Spice It Up!">
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="entrys">
+      <% if(locals.blogg && locals.blogg.length> 0) { %>
+        <% blogg.forEach((e , bloggId)=> { %>
+          <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5 my-5">
+            <h1 class="text-body-emphasis">
+              <%= e.todoName %>
+            </h1>
+            <p class="col-lg-8 mx-auto mb-1">
+              <%= e.todoText %>
+            </p>
+            <p class="col-lg-6 mx-auto mb-1">
+              <%= e.currentDate %>
+            </p>
+            <form class="form-floating d-inline-block" action="/delete" method="POST">
+              <button class="btn btn-danger mb-3 my-3" type="submit" name="delete">Delete</button>
+            </form>
+            <form class="form-floating d-inline-block " action="/edit" method="POST">
+              <button class="btn btn-primary mb-3 my-3" type="submit" name="bloggId"
+                value="<%= bloggId %>">Edit</button>
+            </form>
+          </div>
+          <% }); %>
+            <% } %>
+
+    </section>
+
+    <% if(locals.bloggId) { %>
+
+      <form action="/edit-submit" class="form-floating d-flex flex-column align-items-center" method="post">
+        <div class="mb-3 my-5 form-label d-flex flex-column align-items-center" style="width: 60%">
+          <label for="todoName" class="form-label">Name from Author</label>
+          <input type="text" class="form-control" name="todoName" value="<%= blogToEdit.todoName %>" required>
+          <label for="floatingTextarea2" class="form-label">Write your new Recipe here</label>
+          <textarea class="form-control" id="floatingTextarea2" name="todoText" style="height: 100px"
+            required><%= blogToEdit.todoText %></textarea>
+          <input type="hidden" name="bloggId" value="<%= bloggId %>">
+          <input class="btn btn-primary mb-3 my-3" type="submit" value="Update">
+        </div>
+      </form>
+      <% } %>
+        <%- include("partitionen/footer.ejs")%>
