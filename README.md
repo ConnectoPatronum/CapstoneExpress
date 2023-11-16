@@ -16,9 +16,6 @@ Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
 ### Installation
 
 Clone the repository and navigate to the project directory:
-
-```bash
-git clone https://github.com/your-username/food-blog.git
 cd food-blog
 
 
